@@ -11,7 +11,7 @@ Please feel free to use this as an example to fix ur shitty perm spoofer paste a
 - the code also recalculates the CRC32 checksum for the uefi runtime service table, which is neccecary to maintain the integrity of the table after modifications
 - `InitializeSecureBootHook` is the second entry point that calls `UefiMain`
 
-# what does this code do?? im confused?? how do i paste this into my nonpastedspoofer.sln
+# understanding the code (for pasters)
 - this driver demonstrates how to intercept calls to a uefi runtime service in order to alter the behaviour for certain variables, while delegating all the other variable requests to the original service function.
 - to implement, finish, and structure this code to work with your spoofer you need to have a bit of intelligence, creating a new file under 'sb bypass' and pasting this will not work and only give u 10 more errors
 
