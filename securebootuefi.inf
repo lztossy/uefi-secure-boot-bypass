@@ -1,0 +1,88 @@
+;
+; securebootuefi.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=USBDevice
+ClassGuid={88BAE032-5A81-49f0-BC3D-A4FF138216D6}
+Provider=%ManufacturerName%
+CatalogFile=securebootuefi.cat
+DriverVer=
+PnpLockDown=1
+
+[DestinationDirs]
+DefaultDestDir = 12
+securebootuefi_Device_CoInstaller_CopyFiles = 11
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+securebootuefi.sys  = 1,,
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll=1 ; make sure the number matches with SourceDisksNames
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NT$ARCH$
+
+[Standard.NT$ARCH$]
+%securebootuefi.DeviceDesc%=securebootuefi_Device, USB\VID_vvvv&PID_pppp
+
+[securebootuefi_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+securebootuefi.sys
+
+[securebootuefi_Device.NT.HW]
+AddReg=securebootuefi_AddReg
+
+[securebootuefi_AddReg]
+; By default, USBDevice class uses iProduct descriptor to name the device in
+; Device Manager on Windows 8 and higher.
+; Uncomment for this device to use %DeviceName% on Windows 8 and higher:
+;HKR,,FriendlyName,,%securebootuefi.DeviceDesc%
+
+;-------------- Service installation
+[securebootuefi_Device.NT.Services]
+AddService = securebootuefi,%SPSVCINST_ASSOCSERVICE%, securebootuefi_Service_Inst
+
+; -------------- securebootuefi driver install sections
+[securebootuefi_Service_Inst]
+DisplayName    = %securebootuefi.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\securebootuefi.sys
+
+;
+;--- securebootuefi_Device Coinstaller installation ------
+;
+
+[securebootuefi_Device.NT.CoInstallers]
+AddReg=securebootuefi_Device_CoInstaller_AddReg
+CopyFiles=securebootuefi_Device_CoInstaller_CopyFiles
+
+[securebootuefi_Device_CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000, "WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll,WdfCoInstaller"
+
+[securebootuefi_Device_CoInstaller_CopyFiles]
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll
+
+[securebootuefi_Device.NT.Wdf]
+KmdfService =  securebootuefi, securebootuefi_wdfsect
+[securebootuefi_wdfsect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="<Your manufacturer name>" ;TODO: Replace with your manufacturer name
+ClassName="Universal Serial Bus devices"
+DiskName = "securebootuefi Installation Disk"
+securebootuefi.DeviceDesc = "securebootuefi Device"
+securebootuefi.SVCDESC = "securebootuefi Service"
+REG_MULTI_SZ = 0x00010000
