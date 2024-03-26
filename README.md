@@ -16,7 +16,7 @@ Please feel free to use this as an example to fix ur shitty perm spoofer paste a
 - to implement, finish, and structure this code to work with your spoofer you need to have a bit of intelligence, creating a new file under 'sb bypass' and pasting this will not work and only give u 10 more errors
 
 # how do i build this?
-- Install (EDK II)[https://github.com/tianocore/edk2] following the TianoCore documentation, which involves cloning the EDK II repository and setting up necessary tools like the compiler (GCC or CLANG for Linux, or MSVC for Windows).
+- Install https://github.com/tianocore/edk2 (EDK II) following the TianoCore documentation, which involves cloning the EDK II repository and setting up necessary tools like the compiler (GCC or CLANG for Linux, or MSVC for Windows).
 - Within the EDK II workspace, create a new package directory for your driver if it doesn't exist already.
 Inside this directory, create a .inf file that describes your driver and its sources. This file contains metadata and a list of the source files, include directories, library classes used, etc.
 - Set up the environment variables needed by EDK II. This is typically done by running the edksetup.bat script on Windows or edksetup.sh script on Linux.
