@@ -1,5 +1,5 @@
 # uefi secure boot bypass
-code snippet is an example of a UEFI driver that implements a hook for the `GetVariable` UEFI runtime service. 
+poc of a UEFI driver that implements a hook for the `GetVariable` UEFI runtime service. 
 The hook is to simulate the enablement of the SB (secureboot) bios function, without it being enabled
 this code is unfinished, and will most likely not be completed, maybe in the future when im free. 
 Please feel free to use this as an example to fix ur shitty perm spoofer paste and actually add a functional sb bypass 😆
